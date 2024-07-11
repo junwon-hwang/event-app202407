@@ -3,17 +3,16 @@ import styles from './SignUpForm.module.scss';
 import { AUTH_URL } from '../../../config/host-config';
 
 const EmailInput = () => {
-
   const inputRef = useRef();
 
   // 입력한 이메일
-  const [enteredEmail , setEnteredEmail] = useState('');
- 
-  // 검증여부
-  const [emailValid, setEmailValid] = useState(false);
+  const [enteredEmail, setEnteredEmail] = useState('');
 
-  // 에러 메시지 
-  const [error , setError] = useState('');
+  // 검증여부
+  const [emailVaild, setEmailValid] = useState(false);
+
+  // 에러 메시지
+  const [error, setError] = useState('');
 
   // 이메일 패턴 검증
   const validateEmail = (email) => {
@@ -21,46 +20,41 @@ const EmailInput = () => {
     return emailPattern.test(email);
   };
 
-  // 이메일 검증 후속 처리 
+  // 이메일 검증 후속 처리
   const checkEmail = async (email) => {
-    if(!emailValid){
+    if (!validateEmail(email)) {
       // 에러메시지 세팅
       setError('이메일 형식이 유효하지 않습니다.');
       return;
     }
-   
-     // 중복 검사 
-      const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
-      // console.log('res: ' , response);
-      const flag = await response.json();
 
-      // console.log('flag: ', flag);
-      if(flag){
-        setEmailValid(false);
-        setError('이메일이 중복되었습니다.');
+    // 중복 검사
+    const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
+    // console.log('res: ', response);
+    const flag = await response.json();
+    // console.log('flag: ', flag);
+    if (flag) {
+      setEmailValid(false);
+      setError('이메일이 중복되었습니다.');
     }
-    
-    
   };
 
-
-  const changeHandler = e =>{
+  const changeHandler = (e) => {
     const email = e.target.value;
-    const isValid = validateEmail(email);
-    // console.log(isValid);
+    // const isVaild = validateEmail(email);
+    // console.log('isValid: ', isVaild);
 
     setEnteredEmail(email);
-    setEmailValid(isValid);
+    // setEmailValid(isVaild);
 
-    // 이메일 검증 후속 처리
+    // 이메일 검증 후속처리
     checkEmail(email);
-
   };
 
   // 렌더링 되자마자 입력창에 포커싱
-  useEffect(()=>{
+  useEffect(() => {
     inputRef.current.focus();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -70,9 +64,9 @@ const EmailInput = () => {
         type="email"
         placeholder="Enter your email"
         onChange={changeHandler}
-        className={!emailValid ? styles.invalidInput : ''}
+        className={!emailVaild ? styles.invalidInput : ''}
       />
-      {!emailValid && <p className={styles.errorMessage}>{error}</p>}
+      {!emailVaild && <p className={styles.errorMessage}>{error}</p>}
     </>
   );
 };
