@@ -1,12 +1,9 @@
-import React, { useEffect , useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './SignUpForm.module.scss';
 import { AUTH_URL } from '../../../config/host-config';
-
-const EmailInput = () => {
+import { debounce } from 'lodash';
+const EmailInput = ({ onSuccess }) => {
   const inputRef = useRef();
-
-  // 입력한 이메일
-  const [enteredEmail, setEnteredEmail] = useState('');
 
   // 검증여부
   const [emailVaild, setEmailValid] = useState(false);
@@ -21,7 +18,7 @@ const EmailInput = () => {
   };
 
   // 이메일 검증 후속 처리
-  const checkEmail = async (email) => {
+  const checkEmail = debounce(async (email) => {
     if (!validateEmail(email)) {
       // 에러메시지 세팅
       setError('이메일 형식이 유효하지 않습니다.');
@@ -36,16 +33,17 @@ const EmailInput = () => {
     if (flag) {
       setEmailValid(false);
       setError('이메일이 중복되었습니다.');
+      return;
     }
-  };
+
+    // 이메일 중복확인 끝
+    setEmailValid(true);
+    onSuccess();
+
+  }, 1500);
 
   const changeHandler = (e) => {
     const email = e.target.value;
-    // const isVaild = validateEmail(email);
-    // console.log('isValid: ', isVaild);
-
-    setEnteredEmail(email);
-    // setEmailValid(isVaild);
 
     // 이메일 검증 후속처리
     checkEmail(email);
@@ -72,3 +70,4 @@ const EmailInput = () => {
 };
 
 export default EmailInput;
+
