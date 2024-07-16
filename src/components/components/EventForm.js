@@ -3,19 +3,19 @@ import React from 'react';
 import styles from './EventForm.module.scss';
 import { useNavigate , Form, redirect} from 'react-router-dom';
 import { EVENT_URL } from '../../config/host-config';
+import { getUserToken } from '../../config/auth'
 
-const EventForm = ({ method, event={} }) => {
-
+const EventForm = ({ method, event = {} }) => {
   const {
     title,
     desc: description,
     'img-url': image,
-    'start-date': date
+    'start-date': date,
   } = event;
 
   // 날짜 형식을 변경 (yyyy-MM-dd)
   /**
-   * 
+   *
    * @param date - yyyy년 MM월 dd일
    */
   const convertDateFormat = (date) => {
@@ -72,20 +72,19 @@ const EventForm = ({ method, event={} }) => {
   //     });
 
   //     navigate('/events');
-
   //   })();
   // };
 
-
-  // 2.  action함수를 트리거 하려면 일반 from을 사용하면 안되고
-  // 3.  react-router-dom 에서 제공하는 Form이라는 컴포넌트를 사용한다.
-  // 4.  method 옵션을 설정한다. 
+  // 2. action함수를 트리거하려면 일반 form을 사용하면 안되고
+  // 3. react-router-dom에서 제공하는 Form이라는 컴포넌트를 사용한다.
+  // 4. method 옵션을 설정한다.
   return (
     <Form
-          method={method}
-          className={styles.form} 
-          // onSubmit={submitHandler} 
-          noValidate>
+      method={method}
+      className={styles.form}
+      // onSubmit={submitHandler}
+      noValidate
+    >
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -141,6 +140,7 @@ const EventForm = ({ method, event={} }) => {
 
 export default EventForm;
 
+
 // 서버에 갱신요청을 보내는 트리거함수
 // App.js에서 router에 설정
 export const action = async ({ request, params }) => {
@@ -173,9 +173,11 @@ export const action = async ({ request, params }) => {
     method: request.method,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getUserToken()
     },
     body: JSON.stringify(payload),
   });
 
   return redirect('/events');
-}
+
+};
