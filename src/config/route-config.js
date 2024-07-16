@@ -13,6 +13,7 @@ import { action as manipulateAction } from '../components/components/EventForm';
 import SignUpPage from '../components/pages/SignUpPage';
 import WelcomePage from '../components/pages/WelcomePage';
 import { loginAction } from '../components/components/auth/LoginForm';
+import { userDataLoader } from './auth';
 
 // 라우터 설정
 const eventsRouter = [
@@ -67,6 +68,8 @@ export const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    loader: userDataLoader,
+    id: 'user-data',
     children: [
       { 
         index: '/', 
