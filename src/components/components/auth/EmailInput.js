@@ -23,14 +23,14 @@ const EmailInput = ({ onSuccess }) => {
       // 에러메시지 세팅
       setError('이메일 형식이 유효하지 않습니다.');
       return;
-    }
+    } 
 
     // 중복 검사
     const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
     // console.log('res: ', response);
     const flag = await response.json();
     // console.log('flag: ', flag);
-    if (flag) {
+    if (flag) {  
       setEmailValid(false);
       setError('이메일이 중복되었습니다.');
       return;

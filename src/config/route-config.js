@@ -5,13 +5,14 @@ import Home from '../components/pages/Home';
 import RootLayout from '../components/layout/RootLayout';
 import ErrorPage from '../components/pages/ErrorPage';
 import Events from '../components/pages/Events';
-import EventDetail, { loader as eventDetailLoader, action as deleteAction } from '../components/pages/EventDetail';
+import EventDetail, { loader as eventDetailLoader, action as deleteAction, action } from '../components/pages/EventDetail';
 import EventLayout from '../components/layout/EventLayout';
 import NewEvent from '../components/pages/NewEvent';
 import EditPage from '../components/pages/EditPage';
 import { action as manipulateAction } from '../components/components/EventForm';
 import SignUpPage from '../components/pages/SignUpPage';
 import WelcomePage from '../components/pages/WelcomePage';
+import { loginAction } from '../components/components/auth/LoginForm';
 
 // 라우터 설정
 const eventsRouter = [
@@ -52,7 +53,8 @@ const homeRouter = [
 
   {
     index: true,
-    element: <WelcomePage />
+    element: <WelcomePage />,
+    action : loginAction
   }, // 웰컴 페이지 (로그인화면 or 로그인완료화면)
   {
     path: 'sign-up',
