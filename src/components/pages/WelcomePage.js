@@ -1,8 +1,17 @@
-import React from 'react'
-import LoginForm from '../components/auth/LoginForm'
+import React, { useEffect, useState } from "react";
+import LoginForm from "../components/auth/LoginForm";
+import Main from "../components/main";
 
 const WelcomePage = () => {
-  return <LoginForm />
-}
 
-export default WelcomePage
+  console.log('WelcomePage 실행!');
+
+  return (
+    <>
+      {<LoginForm />}
+      {<Main />}
+    </>
+  );
+};
+
+export default WelcomePage;
