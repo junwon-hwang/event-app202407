@@ -185,7 +185,6 @@ export const action = async ({ request, params }) => {
     alert(errorText);
   }
 
-
   return redirect('/events');
 
 };
