@@ -13,7 +13,7 @@ import { action as manipulateAction } from '../components/components/EventForm';
 import SignUpPage from '../components/pages/SignUpPage';
 import WelcomePage from '../components/pages/WelcomePage';
 import { loginAction } from '../components/components/auth/LoginForm';
-import { userDataLoader } from './auth';
+import { authCheckLoader, userDataLoader } from './auth';
 import { logoutAction } from '../components/pages/Logout';
 
 
@@ -84,6 +84,7 @@ export const router = createBrowserRouter([
       {
         path: 'events',
         element: <EventLayout />,
+        loader: authCheckLoader,
         children: eventsRouter
       },
     ]
