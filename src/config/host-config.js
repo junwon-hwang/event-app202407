@@ -10,7 +10,7 @@ let backendHostName;
 
 if (clientHostName === 'localhost') {
   backendHostName = 'http://localhost:' + LOCAL_PORT;
-} else if (clientHostName === 'my-event-app998877.s3-website.ap-northeast-2.amazonaws.com') {
+} else if (clientHostName === 'my-event-app8847.s3-website.ap-northeast-2.amazonaws.com') {
   backendHostName = 'http://3.38.68.209:8989';
 }
 
